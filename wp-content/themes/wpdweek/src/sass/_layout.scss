@@ -1,10 +1,40 @@
 @charset "utf-8";
 
-.site{
-	background-color: #f6f6f6;
+
+body:not(.custom-background-image):before, body:not(.custom-background-image):after {
+	display: none;
 }
-.frontpage .content-area {
-	float: none;
-	margin-right: 0;
-	width: 100%;
+
+.site{
+	background-color: transparent;
+}
+.site-header {
+		padding: 0 4.5455%;
+}
+
+@media screen and (max-width: 56.874em){
+	.entry-header, .entry-summary, .entry-content, .entry-footer, .page-content, .comments-area, {
+		margin-right: 3%;
+		margin-left: 3%;
+	}
+
+	.content-bottom-widgets {
+		margin: 0 3%;
+	}
+
+	.sidebar {
+		padding: 0 3%;
+	}
+
+	.site-footer {
+		padding: 0 3%;
+	}
+}
+
+.home,.page-template-fullwidth{
+	.content-area {
+		float: none;
+		margin-right: 0;
+		width: 100%;
+	}
 }
