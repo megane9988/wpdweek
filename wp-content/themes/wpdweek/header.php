@@ -30,9 +30,9 @@
 			<div class="site-header-main">
 				<div class="site-branding">
 					<?php if ( is_front_page() && is_home() ) : ?>
-						<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><img src="http://placehold.it/180x100/000000/f6f6f6" alt="">	</a></h1>
+						<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><img src="<?php bloginfo('stylesheet_directory'); ?>/src/img/siteLogo.png" alt="<?php bloginfo('name'); ?>">	</a></h1>
 					<?php else : ?>
-						<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><img src="http://placehold.it/180x100/000000/f6f6f6" alt="">	</a></p>
+						<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><img src="<?php bloginfo('stylesheet_directory'); ?>/src/img/siteLogo.png" alt="<?php bloginfo('name'); ?>">	</a></p>
 					<?php endif;
 
 					$description = get_bloginfo( 'description', 'display' );
