@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2015-06-07 07:31:47+0000\n"
+"PO-Revision-Date: 2016-01-30 06:55:12+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,117 +10,189 @@ msgstr ""
 "X-Generator: GlotPress/1.0-alpha-1100\n"
 "Project-Id-Version: Stable (latest release)\n"
 
-#: checks/postsnav.php:18
-msgid "The theme doesn't have post pagination code in it. Use <strong>posts_nav_link()</strong> or <strong>paginate_links()</strong> or <strong>the_posts_pagination</strong> or <strong>next_posts_link()</strong> and <strong>previous_posts_link()</strong> to add post pagination."
-msgstr "テーマに投稿ペジネーションのコードがありません。投稿ペジネーションを追加するには <strong>posts_nav_link()</strong>、<strong>paginate_links()</strong>、<strong>the_posts_pagination</strong>、<strong>next_posts_link()</strong>、<strong>previous_posts_link()</strong> のいずれかを使ってください。"
+#: checks/phpshort.php:14
+msgid "Found PHP short tags in file %1$s.%2$s"
+msgstr "ファイル %1$s でPHP のショートタグが見つかりました。%2$s"
 
-#: checks/lineendings.php:11 checks/lineendings.php:20
-#: checks/lineendings.php:31
-msgid "Both DOS and UNIX style line endings were found in the file <strong>%1$s</strong>. This causes a problem with SVN repositories and must be corrected before the theme can be accepted. Please change the file to use only one style of line endings."
-msgstr "ファイル <strong>%1$s</strong> で DOS と UNIX 両方の改行形式が見つかりました。これは SVN レポジトリで問題を引き起こすため、テーマが承認される前に修正する必要があります。どちらか一方の改行形式に統一してください。"
+#: checks/i18n.php:52
+msgid "Possible variable %1$s found in translation function in %2$s. Translation function calls must NOT contain PHP variables. %3$s"
+msgstr "翻訳関数 %2$s の中に変数と思われる %1$s が見つかりました。翻訳関数のコールは PHP の変数を含んではいけません。%3$s"
+
+#: checks/style_suggested.php:20
+msgid "%s is missing from your style.css header."
+msgstr "style.css のヘッダーに %s がありません。"
+
+#: checks/textdomain.php:89
+msgid "Found a translation function that has an incorrect number of arguments. Function %1$s, with the arguments %2$s"
+msgstr "誤った数の引数を持った翻訳関数が見つかりました。関数 %1$s で引数は %2$s です。"
+
+#: checks/textdomain.php:119
+msgid "Found a translation function that is missing a text-domain. Function %1$s, with the arguments %2$s"
+msgstr "テキストドメインのない翻訳関数が見つかりました。関数 %1$s で引数は %2$s です。"
+
+#: checks/time_date.php:22
+msgid "At least one hard coded date was found in the file %1$s. Consider %2$s instead."
+msgstr "ファイル %1$s で少なくとも1つのハードコードされた日付が見つかりました。代わりに %2$s を検討してください。"
+
+#: main.php:60
+msgid "This child theme requires at least version %1$s of theme %2$s to be installed. You only have %3$s please update the parent theme."
+msgstr "この小テーマをインストールするにはテーマ %2$s の少なくともバージョン %1$s を必要とします。 %3$s しかありませんので、親テーマを更新してください。"
+
+#: checks/textdomain.php:42
+msgid "(If this is a child theme, you can ignore this error.)"
+msgstr "(子テーマの場合、このエラーは無視してください。)"
+
+#. Author of the plugin/theme
+msgid "Otto42, pross"
+msgstr "Otto42, pross"
+
+#: main.php:81
+msgid " Running %1$s tests against %2$s using Guidelines Version: %3$s Plugin revision: %4$s"
+msgstr "プラグインのリビジョン: %4$s は、ガイドラインのバージョン: %3$s に従って、 %2$s ではなく %1$s のテストを実行しました。"
+
+#: checks/textdomain.php:141
+msgid "The domains found are %s"
+msgstr "見つかったドメインは %s です"
+
+#: checks/textdomain.php:146
+msgid "The domain found is %s"
+msgstr "見つかったドメインは %s です"
+
+#: checks/filenames.php:57
+msgid "Could not find the file %1$s in the theme. %2$s"
+msgstr "テーマ内にファイル %1$s が見つかりませんでした。 %2$s"
+
+#: checks/style_tags.php:27
+msgid "Found wrong tag, remove %s from your style.css header."
+msgstr "間違ったタグが見つかりました。style.css のヘッダーから %s を取り除いてください。"
+
+#: checks/links.php:26
+msgid "Possible hard-coded links were found in the file %1$s.%2$s"
+msgstr "ファイル %1$s に、ハードコーディングと思われるリンクが見つかりました。 %2$s"
+
+#: checks/iframes.php:20 checks/malware.php:23
+msgid "%1$s was found in the file %2$s %3$s.%4$s"
+msgstr "ファイル %2$s 内に %1$s が見つかりました。 %3$s 。 %4$s"
+
+#: checks/include.php:19
+msgid "%1$s %2$s %3$s"
+msgstr "%1$s %2$s %3$s"
+
+#: checks/searchform.php:16
+msgid "%1$s %2$s%3$s"
+msgstr "%1$s %2$s%3$s"
+
+#: checks/post-formats.php:27
+msgid "%1$s was found in the file %2$s. However get_post_format and/or has_post_format were not found, and no use of formats in the CSS was detected."
+msgstr "%1$s がファイル %2$s 内に見つかりましたが、get_post_format および/または has_post_format が見つからず、CSS でのフォーマット使用が検知されませんでした。"
+
+#: checks/constants.php:24 checks/more_deprecated.php:52 checks/required.php:22
+#: checks/suggested.php:34
+msgid "%1$s was found in the file %2$s. Use %3$s instead.%4$s"
+msgstr "ファイル %2$s で %1$s が見つかりました。代わりに %3$s を使用してください。%4$s"
+
+#: checks/basic.php:34
+msgid "Could not find %1$s. %2$s"
+msgstr "%1$s が見つかりません。%2$s"
+
+#: checks/badthings.php:29
+msgid "Found %1$s in the file %2$s. %3$s. %4$s"
+msgstr "ファイル %2$s 内に %1$s が見つかりました。 %3$s 。 %4$s"
+
+#: checks/filenames.php:50
+msgid "Could not find the file %s in the theme."
+msgstr "テーマ内にファイル %s が見つかりませんでした。"
+
+#: checks/filenames.php:43
+msgid "%1$s %2$s found."
+msgstr "%1$s %2$s が見つかりました。"
+
+#: theme-check.php:50
+msgctxt "title of the main page"
+msgid "Theme Check"
+msgstr "Theme Check"
+
+#: main.php:112
+msgid "If you have found a bug or would like to make a suggestion or contribution, please leave a post on the <a href=\"%1$s\">WordPress forums</a>, or talk about it with the theme review team on <a href=\"%2$s\">Make WordPress Themes</a> site."
+msgstr "バグ報告や提案、コントリビューションのご希望があれば <a href=\"%1$s\">WordPress フォーラム</a>に投稿するか、<a href=\"%2$s\">Make WordPress Themes</a> サイトにてテーマレビューチームにご相談ください。"
+
+#: main.php:113
+msgid "The code for Theme Check can be contributed to on <a href=\"%s\">GitHub</a>."
+msgstr "プラグインのコードは <a href=\"%s\">GitHub</a> から開発に参加できます。"
+
+#: checks/textdomain.php:139
+msgid "More than one text-domain is being used in this theme. This means the theme will not be compatible with WordPress.org language packs."
+msgstr "1つ以上のテキストドメインがこのテーマ内で使用されています。これはテーマが WordPress.org の言語パックと互換性がないことを意味します。"
+
+#: checks/textdomain.php:144
+msgid "Only one text-domain is being used in this theme. Make sure it matches the theme's slug correctly so that the theme will be compatible with WordPress.org language packs."
+msgstr "1つのテキストドメインがこのテーマ内で使用されています。テーマが WordPress.org の言語パックと互換性を持つよう、テーマのスラッグと一致しているかを確認してください。"
+
+#: checks/textdomain.php:41
+msgid "Your theme appears to be in the wrong directory for the theme name. The directory name must match the slug of the theme. This theme's correct slug and text-domain is %s."
+msgstr "このテーマは、テーマ名に対して間違ったディレクトリにあります。ディレクトリ名はテーマのスラッグと一致する必要があります。このテーマの正しいスラッグとテキストドメインは %s です。"
+
+#: checks/style_needed.php:25
+msgid "<strong>.screen-reader-text</strong> css class is needed in your theme css. See See: <a href=\"http://codex.wordpress.org/CSS#WordPress_Generated_Classes\">the Codex</a> for an example implementation."
+msgstr "テーマ CSS 中に CSS クラス <strong>.screen-reader-text</strong> が必要です。<a href=\"http://wpdocs.osdn.jp/CSS\">Codex</a> で実例を参照してください。"
 
 #: checks/plugin-territory.php:32
 msgid "The theme uses the %s function. Custom post-content shortcodes are plugin-territory functionality."
 msgstr "このテーマは %s 関数を使っています。ショートコード定義はプラグインの領域の機能です。"
 
-#: checks/searchform.php:16
-msgid "<strong>%1$s</strong> %2$s%3$s"
-msgstr "<strong>%1$s</strong> %2$s%3$s"
-
 #: checks/style_tags.php:25
 msgid "The flexible-width and fixed-width tags changed to fluid-layout and fixed-layout tags in WordPress 3.8. Additionally, the responsive-layout tag was added. Please change to using one of the new tags."
 msgstr "flexible-width タグと fixed-width タグは、WordPress 3.8 から fluid-layout タグと fixed-layout タグに変更されました。さらに responsive-layout タグが追加されました。新しいタグに変更してください。"
-
-#. translators: 1: filename 2: error message 3: grep results
-#: checks/textdomain.php:32
-msgid "Text domain problems in <strong>%1$s</strong>. %2$s %3$s "
-msgstr "<strong>%1$s</strong> にテキストドメインの問題があります。%2$s %3$s "
-
-#: checks/textdomain.php:38 checks/textdomain.php:39
-msgid "Text domain should match theme slug: <strong>%1$s</strong>"
-msgstr "テキストドメインはテーマのスラッグ <strong>%1$s</strong> と一致すべきです。"
 
 #: checks/widgets.php:34
 msgid "Sidebars need to be registered in a custom function hooked to the <strong>widgets_init</strong> action. See: %s."
 msgstr "サイドバーは、独自の関数を <strong>widgets_init</strong> アクションにフックさせて登録しなければなりません。%s をご覧ください。"
 
-#: main.php:12
-msgid "Parent theme <strong>%1$s</strong> not found! You have to have parent AND child-theme installed!"
-msgstr "親テーマ <strong>%1$s</strong> が見つかりません。親テーマと子テーマの両方をインストールする必要があります。"
-
 #: main.php:53
 msgid "License URI"
 msgstr "License URI"
 
-#: main.php:61
-msgid "This is a child theme. The parent theme is: <strong>%1$s</strong>. These files have been included automatically!"
-msgstr "これは子テーマです。親テーマは <strong>%1$s</strong> です。親テーマのファイルは自動的に含まれています。"
-
-#: main.php:65
+#: main.php:73
 msgid "Child theme is only tested up to version %1$s of %2$s breakage may occur! %3$s installed version is %4$s"
 msgstr "子テーマが親テーマ %2$s のバージョン %1$s までしかテストされておらず、依存関係が壊れているかもしれません。現在インストールされている %3$s のバージョンは %4$s です。"
 
-#: main.php:75
+#: main.php:89
 msgid "One or more errors were found for %1$s."
 msgstr "エラーが見つかりました: %1$s"
 
-#: main.php:80
-msgid "<strong>WP_DEBUG is not enabled!</strong> Please test your theme with <a href=\"http://codex.wordpress.org/Editing_wp-config.php\">debug enabled</a> before you upload!"
-msgstr "<strong>WP_DEBUG が無効になっています。</strong>テーマをアップロードする前に<a href=\"http://wpdocs.sourceforge.jp/wp-config.php_%E3%81%AE%E7%B7%A8%E9%9B%86\">デバッグモードを有効</a>にしてからテストしてください。"
-
-#: main.php:91
+#: main.php:105
 msgid "About"
 msgstr "このプラグインについて"
 
-#: main.php:93
+#: main.php:107
 msgid "Contact"
 msgstr "お問い合わせ"
 
-#: main.php:98
-msgid "If you have found a bug or would like to make a suggestion or contribution why not join the <a href=\"http://wordpress.org/extend/themes/contact/\">theme-reviewers mailing list</a> or leave a post on the <a href=\"http://wordpress.org/tags/theme-check?forum_id=10\">WordPress forums</a>."
-msgstr "バグを見つけたり、提案や貢献をしてくださるなら、<a href=\"http://wordpress.org/extend/themes/contact/\">theme-reviewers メーリングリスト</a>に参加いただくか、<a href=\"http://wordpress.org/tags/theme-check?forum_id=10\">WordPress フォーラム</a>に投稿してください。"
-
-#: main.php:94
-msgid "Theme-Check is maintained by %1s and %2s."
-msgstr "このプラグインは %1s と %2s が管理しています。"
-
-#: main.php:116
+#: main.php:125
 msgid "Theme Development"
 msgstr "テーマ開発"
 
-#: main.php:114
+#: main.php:123
 msgid "Codex Links"
 msgstr "Codex のリンク"
 
-#: main.php:117
+#: main.php:126
 msgid "Themes and Templates forum"
 msgstr "テーマとテンプレートのフォーラム"
 
-#: main.php:113
-msgid "Make sure to review the guidelines at <a href=\"http://codex.wordpress.org/Theme_Review\">Theme Review</a> before uploading a Theme."
-msgstr "テーマをアップロードする前に、<a href=\"http://wpdocs.sourceforge.jp/Theme_Review\">テーマレビュー</a>のガイドラインを復習するのを忘れないようにしてください。"
-
-#: main.php:112
+#: main.php:121
 msgid "Now your theme has passed the basic tests you need to check it properly using the test data before you upload to the WordPress Themes Directory."
 msgstr "テーマは、基本的なテストを通過しました。WordPress テーマディレクトリに投稿する前には、必ずテストデータを使って確認する必要があります。"
 
-#: main.php:106
+#: main.php:115
 msgid "The WordPress Theme Review Team"
 msgstr "WordPress テーマレビューチーム"
 
-#: main.php:105
+#: main.php:114
 msgid "Testers"
 msgstr "テスト協力者"
 
-#: main.php:100
-msgid "Localization"
-msgstr "翻訳者"
-
-#: main.php:99
-msgid "Contributors"
-msgstr "貢献者"
-
-#: main.php:118
+#: main.php:127
 msgid "Theme Unit Tests"
 msgstr "テーマユニットテスト"
 
@@ -136,25 +208,13 @@ msgstr "http://ottopress.com/wordpress-plugins/theme-check/"
 msgid "A simple and easy way to test your theme for all the latest WordPress standards and practices. A great theme development tool!"
 msgstr "最新の WordPress テーマのコーディング基準や慣例のすべてを簡単にテストできます。テーマ開発に非常に役立つツールです。"
 
-#. Author of the plugin/theme
-msgid "Pross, Otto42"
-msgstr "Pross, Otto42"
-
 #. Author URI of the plugin/theme
 msgid "http://ottopress.com"
 msgstr "http://ottopress.com"
 
-#: checks/textdomain.php:55
-msgid "Text domain problems in <strong>%1$s</strong>. The %2s text domain is being used!%3$s"
-msgstr "ファイル <strong>%1$s</strong> にテキストドメインの問題があります。%3$s で %2$s のテキストドメインが使われています!"
-
 #: checks/navmenu.php:14
 msgid "No reference to nav_menu's was found in the theme. Note that if your theme has a menu bar, it is required to use the WordPress nav_menu functionality for it."
 msgstr "テーマ内に nav_menu への参照が見つかりませんでした。テーマにメニューバーがある場合は、WordPress の nav_menu 機能を使う必要があることに注意してください。"
-
-#: checks/post-formats.php:27
-msgid "<strong>%1$s</strong> was found in the file <strong>%2$s</strong>. However get_post_format and/or has_post_format were not found, and no use of formats in the CSS was detected."
-msgstr "<strong>%1$s</strong> が <strong>%2$s</strong> ファイルで見つかりました。 ただし、 get_post_format および has_post_format が見つかりませんでした。また、 CSS でのフォーマットの使用も検出されませんでした。"
 
 #: checks/postthumb.php:15
 msgid "No reference to <strong>the_post_thumbnail()</strong> was found in the theme. It is recommended that the theme implement this functionality instead of using custom fields for thumbnails."
@@ -168,37 +228,9 @@ msgstr "post-thumbnails への参照が見つかりませんでした。テー�
 msgid "The theme uses the %s function, which is plugin-territory functionality."
 msgstr "このテーマは %s 関数を使っていますが、これはプラグインの領域に含まれる機能です。"
 
-#: checks/phpshort.php:14
-msgid "Found PHP short tags in file <strong>%1$s</strong>.%2$s"
-msgstr "PHP ショートタグが <strong>%1$s</strong> ファイルで見つかりました。%2$s"
-
-#: checks/nonprintable.php:16
-msgid "Non-printable characters were found in the <strong>%1$s</strong> file. You may want to check this file for errors.%2$s"
-msgstr "印刷可能でない文字がファイル<strong>%1$s</strong>で見つかりました。このファイルのエラーをチェックしたほうがよいかもしれません。%2$s"
-
-#: checks/screenshot.php:24
-msgid "Screenshot is wrong size! Detected: <strong>%1$sx%2$spx</strong>. Maximum allowed size is 880x660px."
-msgstr "スクリーンショットのサイズが間違えています(<strong>%1$sx%2$s ピクセル</strong>)。最大許容サイズは 880x660 ピクセルです。"
-
-#: checks/screenshot.php:30
-msgid "Screenshot size should be 880x660, to account for HiDPI displays. Any 4:3 image size is acceptable, but 880x660 is preferred."
-msgstr "スクリーンサイズは HiDPI ディスプレイを考慮して、880x660にする必要があります。任意の4:3の画像サイズが許容可能であるが、880x660が好ましいです。"
-
-#: checks/links.php:25
-msgid "Possible hard-coded links were found in the file <strong>%1$s</strong>.%2$s"
-msgstr "ファイル <strong>%1$s</strong> にハードコーディングと思われるリンクが見つかりました。%2$s"
-
 #: checks/style_tags.php:16
 msgid "<strong>Tags:</strong> is either empty or missing in style.css header."
 msgstr "<strong>Tags:</strong> が style.css のヘッダ内で空か欠落しています。"
-
-#: checks/style_tags.php:27
-msgid "Found wrong tag, remove <strong>%1$s</strong> from your style.css header."
-msgstr "正しくないタグが見つかりました。<strong>%1$s</strong> をあなたの style.css のヘッダーから削除してください。"
-
-#: checks/style_suggested.php:20
-msgid "<strong>%1$s</strong> is missing from your style.css header."
-msgstr "<strong>%1$s</strong> はあなたの style.css にヘッダから欠落しています。"
 
 #: checks/screenshot.php:27
 msgid "Screenshot dimensions are wrong! Ratio of width to height should be 4:3."
@@ -216,29 +248,19 @@ msgstr "このテーマはタグを表示していないようです。適切な
 msgid "No screenshot detected! Please include a screenshot.png or screenshot.jpg."
 msgstr "スクリーンショットが検出されませんでした。 screenshot.png または screenshot.jpg を含めてください。"
 
-#: checks/time_date.php:22
-msgid "At least one hard coded date was found in the file <strong>%s</strong>. Consider get_option( 'date_format' ) instead."
-msgstr "ファイル <strong>%s</strong> に1箇所以上のハードコードされた日付が見つかりました。代わりに get_option( 'date_format' ) を使うことを検討してください。"
-
-#: checks/textdomain.php:59
-msgid "Text domain problems in <strong>%1$s</strong>. %2$s You are using: <strong>%3s</strong>%4$s"
-msgstr ""
-"<strong>%1$s</strong> にテキストドメインの問題があります。%2$s \n"
-"<strong>%3s</strong> を使用しています。 %4$s"
-
 #: checks/malware.php:9
 msgid "File operations should use the WP_Filesystem methods instead of direct PHP filesystem calls"
 msgstr "ファイル操作は直接的な PHP ファイルシステムコールの代わりに WP_Filesystem メソッドを使用する必要があります"
 
-#: checks/title.php:38
+#: checks/title.php:34
 msgid "The theme needs to have a call to <strong>wp_title()</strong>, ideally in the <strong>header.php</strong> file."
 msgstr "テーマは<strong>wp_title()</strong>関数を呼び出す必要があります。<strong>header.php</strong>ファイル内が理想的です。"
 
-#: checks/title.php:29
+#: checks/title.php:27
 msgid "The theme needs to have <strong>&lt;title&gt;</strong> tags, ideally in the <strong>header.php</strong> file."
 msgstr "テーマには <strong>&lt;title&gt;</strong> タグが必要です。<strong>header.php</strong> ファイル内に含めるのが理想的です。"
 
-#: checks/title.php:53
+#: checks/title.php:48
 msgid "The <strong>&lt;title&gt;</strong> tags can only contain a call to <strong>wp_title()</strong>. Use the  <strong>wp_title filter</strong> to modify the output"
 msgstr "<strong>&lt;title&gt;</strong> タグには <strong>wp_title()</strong> 関数への呼び出しのみを含むことができます。出力を変更するには <strong>wp_title フィルター</strong>を使ってください。"
 
@@ -246,19 +268,11 @@ msgstr "<strong>&lt;title&gt;</strong> タグには <strong>wp_title()</strong> 
 msgid "The theme appears to use <strong>register_sidebar()</strong> but no <strong>dynamic_sidebar()</strong> was found. See: <a href='https://codex.wordpress.org/Function_Reference/dynamic_sidebar'>dynamic_sidebar</a><pre> &lt;?php dynamic_sidebar( $index ); ?&gt;</pre>"
 msgstr "テーマは <strong>dynamic_sidebars()</strong> 関数を使っているようですが、<strong> dynamic_sidebar()</strong> 関数が見つかりませんでした。参照: <a href='http://wpdocs.osdn.jp/Function_Reference/dynamic_sidebar'> dynamic_sidebar </a><pre> &lt;?php dynamic_sidebar( $index ); ?&gt;</pre>"
 
-#: main.php:92
-msgid "The theme check plugin is an easy way to test your theme and make sure it's up to spec with the latest theme review standards. With it, you can run all the same automated testing tools on your theme that WordPress.org uses for theme submissions."
-msgstr "テーマチェックプラグインは、テーマをテストし、最新のテーマレビュー基準の仕様に従っていることを簡単に確認することができます。このプラグインにより、WordPress.org がテーマの受付時に使用する自動化されたテストツールとまったく同じテストを自分のテーマに対して行うことができます。"
-
 #: checks/widgets.php:26
 msgid "The theme appears to use <strong>dynamic_sidebars()</strong> but no <strong>register_sidebar()</strong> was found. See: <a href='https://codex.wordpress.org/Function_Reference/register_sidebar'>register_sidebar</a><pre> &lt;?php register_sidebar( $args ); ?&gt;</pre>"
 msgstr "テーマは <strong>dynamic_sidebars()</strong> 関数を使っているようですが、<strong>register_sidebar()</strong> 関数が見つかりませんでした。参照: <a href='http://wpdocs.osdn.jp/Function_Reference/register_sidebar'>register_sidebar</a><pre> &lt;?php register_sidebar( $args ); ?&gt;</pre>"
 
-#: main.php:59
-msgid "This child theme requires at least version <strong>%1$s</strong> of theme <strong>%2$s</strong> to be installed. You only have <strong>%3$s</strong> please update the parent theme."
-msgstr "この子テーマにはテーマ <strong>%2$s</strong> のバージョン <strong>%1$s</strong> 以降をインストールする必要があります。現在インストールされているのは <strong>%3$s</strong> ですので、親テーマを更新してください。"
-
-#: main.php:63
+#: main.php:71
 msgid "Child theme does not have the <strong>Template Version</strong> tag in style.css."
 msgstr "子テーマの style.css に <strong>Template Version</strong> がありません。"
 
@@ -266,13 +280,9 @@ msgstr "子テーマの style.css に <strong>Template Version</strong> があ�
 msgid "This theme contains no sidebars/widget areas. See <a href='https://codex.wordpress.org/Widgets_API'>Widgets API</a>"
 msgstr "テーマにサイドバー/ウィジェットエリアがありません。<a href='http://wpdocs.osdn.jp/Widgets_API'>ウィジェット API</a> をご覧ください。"
 
-#: main.php:77
+#: main.php:91
 msgid "%1$s passed the tests"
 msgstr "%1$s はテストに通りました"
-
-#: main.php:72
-msgid " Running <strong>%1$s</strong> tests against <strong>%2$s</strong> using Guidelines Version: <strong>%3$s</strong> Plugin revision: <strong>%4$s</strong>"
-msgstr "<strong>%2$s</strong> に対し、ガイドラインバージョン <strong>%3$s</strong> とプラグインリビジョン <strong>%4$s</strong> を使って、<strong>%1$s</strong>個のテスト実行しています。"
 
 #: checks/style_needed.php:24
 msgid "<strong>.gallery-caption</strong> css class is needed in your theme css."
@@ -334,29 +344,9 @@ msgstr "style.css のヘッダーに <strong>Author:</strong> がありません
 msgid "Please use <strong>get_search_form()</strong> instead of including searchform.php directly."
 msgstr "searchform.php を直接インクルードする代りに <strong>get_search_form()</strong> を使ってください。"
 
-#: checks/worms.php:18
-msgid "Malicious footer code injection detected!"
-msgstr "悪意のあるフッターコードのインジェクションを検知しました!"
-
-#: checks/worms.php:16 checks/worms.php:17
+#: checks/worms.php:12 checks/worms.php:13
 msgid "Symptom of the \"Pharma Hack\" <a href=\"http://blog.sucuri.net/2010/07/understanding-and-cleaning-the-pharma-hack-on-wordpress.html\">[1]</a>"
 msgstr "\"Pharma Hack\" <a href=\"http://blog.sucuri.net/2010/07/understanding-and-cleaning-the-pharma-hack-on-wordpress.html\">[1]</a> の可能性"
-
-#: checks/worms.php:15
-msgid "Possible \"Gumblar\" JavaScript attack <a href=\"http://threatinfo.trendmicro.com/vinfo/articles/securityarticles.asp?xmlfile=042710-GUMBLAR.xml\">[1]</a> <a href=\"http://justcoded.com/article/gumblar-family-virus-removal-tool/\">[2]</a>"
-msgstr "\"Gumblar\" JavaScript 攻撃 <a href=\"http://threatinfo.trendmicro.com/vinfo/articles/securityarticles.asp?xmlfile=042710-GUMBLAR.xml\">[1]</a> <a href=\"http://justcoded.com/article/gumblar-family-virus-removal-tool/\">[2]</a> の可能性"
-
-#: checks/worms.php:14
-msgid "Possible Ekibastos attack <a href=\"http://ocaoimh.ie/did-your-wordpress-site-get-hacked/\">[1]</a>"
-msgstr "Ekibastos 攻撃の可能性 <a href=\"http://ocaoimh.ie/did-your-wordpress-site-get-hacked/\">[1]</a>"
-
-#: checks/worms.php:13
-msgid "YAHG Googlerank.info exploit code <a href=\"http://creativebriefing.com/wordpress-hacked-googlerankinfo/\">[1]</a>"
-msgstr "YAHG Googlerank.info 攻撃用コード <a href=\"http://creativebriefing.com/wordpress-hacked-googlerankinfo/\">[1]</a>"
-
-#: checks/worms.php:12
-msgid "base64 encoded text found in Search Engine Redirect hack <a href=\"http://blogbuildingu.com/wordpress/wordpress-search-engine-redirect-hack\">[1]</a>"
-msgstr "検索エンジンリダイレクトハック <a href=\"http://blogbuildingu.com/wordpress/wordpress-search-engine-redirect-hack\">[1]</a> に base64 でエンコードされたテキストが見つかりました"
 
 #: checks/worms.php:11
 msgid "Tells a hacker what operating system your server is running"
@@ -370,23 +360,19 @@ msgstr "これはあなたのサーバーをコントロールするためにク
 msgid "This may be a script used by hackers to get control of your server!"
 msgstr "これはあなたのサーバーをコントロールするためにクラッカーが利用しているスクリプトかもしれません!"
 
-#: checks/textdomain.php:15
-msgid "You have not included a text domain!"
-msgstr "テキストドメインが含まれていません!"
-
-#: theme-check.php:38
+#: theme-check.php:40
 msgid "You do not have sufficient permissions to access this page."
 msgstr "このページにアクセスするための十分なアクセス権がありません。"
 
-#: main.php:139
+#: main.php:148
 msgid "Suppress INFO."
 msgstr "INFO を表示させない。"
 
-#: main.php:138
+#: main.php:147
 msgid "Output in Trac format."
 msgstr "Trac フォーマットでの出力。"
 
-#: main.php:137
+#: main.php:146
 msgid "Check it!"
 msgstr "テスト実行 !"
 
@@ -426,7 +412,44 @@ msgstr "タイトル"
 msgid "Theme Info"
 msgstr "テーマ情報"
 
-#: checkbase.php:91 checkbase.php:110
+#: checks/postsnav.php:19
+msgid "The theme doesn't have post pagination code in it. Use <strong>posts_nav_link()</strong> or <strong>paginate_links()</strong> or <strong>the_posts_pagination()</strong> or <strong>the_posts_navigation()</strong> or <strong>next_posts_link()</strong> and <strong>previous_posts_link()</strong> to add post pagination."
+msgstr "テーマに投稿ペジネーションのコードがありません。投稿ペジネーションを追加するには <strong>posts_nav_link()</strong>、<strong>paginate_links()</strong>、<strong>the_posts_pagination()</strong>、<strong>the_posts_navigation()</strong>、<strong>next_posts_link()</strong><strong>previous_posts_link()</strong> のいずれかを使ってください。"
+
+#: checks/lineendings.php:11 checks/lineendings.php:20
+#: checks/lineendings.php:31
+msgid "Both DOS and UNIX style line endings were found in the file %1$s. This causes a problem with SVN repositories and must be corrected before the theme can be accepted. Please change the file to use only one style of line endings."
+msgstr "ファイル %1$s で DOS と UNIX 両方の改行形式が見つかりました。これは SVN レポジトリで問題を引き起こすため、テーマが承認される前に修正する必要があります。どちらか一方の改行形式に統一してください。"
+
+#: main.php:12
+msgid "Parent theme %1$s not found! You have to have parent AND child-theme installed!"
+msgstr "親テーマ %1$s が見つかりません。親テーマと子テーマの両方をインストールする必要があります。"
+
+#: main.php:67
+msgid "This is a child theme. The parent theme is: %s. These files have been included automatically!"
+msgstr "これは子テーマです。親テーマは %s です。親テーマのファイルは自動的に含まれています。"
+
+#: main.php:106
+msgid "The Theme Check plugin is an easy way to test your theme and make sure it's up to date with the latest theme review standards. With it, you can run all the same automated testing tools on your theme that WordPress.org uses for theme submissions."
+msgstr "テーマチェックプラグインは、テーマをテストと、最新のテーマレビュー基準に対応できているかの確認を簡単に行うことができます。このプラグインにより、WordPress.org がテーマの受付時に使用する自動化されたテストツールとまったく同じテストを自分のテーマに対して行うことができます。"
+
+#: checks/screenshot.php:30
+msgid "Screenshot size should be 1200x900, to account for HiDPI displays. Any 4:3 image size is acceptable, but 1200x900 is preferred."
+msgstr "スクリーンサイズは HiDPI ディスプレイを考慮して、1200x900 にする必要があります。任意の 4:3 の画像サイズが許容できますが、1200x900 が好ましいです。"
+
+#: checks/screenshot.php:24
+msgid "Screenshot is wrong size! Detected: %1$sx%2$spx. Maximum allowed size is 1200x900px."
+msgstr "スクリーンショットのサイズが間違っています。%1$sx%2$spx が検知されましたが。最大許容サイズは 1200x900px です。"
+
+#: main.php:108
+msgid "Theme Check is maintained by %1$s and %2$s."
+msgstr "Theme Check は %1$s および %2$s がメンテナンスしています。"
+
+#: checks/nonprintable.php:16
+msgid "Non-printable characters were found in the %1$s file. You may want to check this file for errors.%2$s"
+msgstr "印刷できない文字がファイル %1$s 内に見つかりました。このファイルにエラーがないかチェックしたほうがよいかもしれません。%2$s"
+
+#: checkbase.php:94 checkbase.php:119
 msgid "Line "
 msgstr "行"
 
@@ -439,7 +462,8 @@ msgstr "ユーザーレベルはバージョン<strong>2.0</strong>で非推奨�
 #: checks/lineendings.php:20 checks/lineendings.php:31 checks/malware.php:23
 #: checks/phpshort.php:14 checks/plugin-territory.php:32
 #: checks/screenshot.php:35 checks/style_tags.php:25 checks/style_tags.php:27
-#: checks/worms.php:28 main.php:80
+#: checks/textdomain.php:40 checks/textdomain.php:87 checks/textdomain.php:117
+#: checks/worms.php:23 main.php:94
 msgid "WARNING"
 msgstr "警告"
 
@@ -460,30 +484,22 @@ msgid "See: <a href=\"https://codex.wordpress.org/Function_Reference/language_at
 msgstr "<a href=\"http://wpdocs.osdn.jp/%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E3%82%BF%E3%82%B0/language_attributes\">language_attributes</a>をご覧ください。<pre>&lt;html &lt;?php language_attributes(); ?&gt;</pre>"
 
 #: checks/cdn.php:32 checks/constants.php:24 checks/customs.php:14
-#: checks/customs.php:18 checks/dep_recommend.php:51 checks/editorstyle.php:13
-#: checks/filenames.php:57 checks/i18n.php:49 checks/navmenu.php:14
+#: checks/customs.php:18 checks/dep_recommend.php:58 checks/editorstyle.php:13
+#: checks/filenames.php:57 checks/i18n.php:52 checks/navmenu.php:14
 #: checks/postthumb.php:15 checks/postthumb.php:19 checks/screenshot.php:24
 #: checks/screenshot.php:27 checks/screenshot.php:30
 #: checks/style_suggested.php:20 checks/style_tags.php:16
-#: checks/suggested.php:34 checks/textdomain.php:30 checks/textdomain.php:55
-#: checks/textdomain.php:59 checks/title.php:20 checks/widgets.php:16
+#: checks/suggested.php:34 checks/title.php:20 checks/widgets.php:16
 msgid "RECOMMENDED"
 msgstr "推奨"
-
-#: checks/basic.php:36
-msgid "Could not find <strong>%1$s</strong>. %2$s"
-msgstr "<strong>%1$s</strong> を見つけることができませんでした。%2$s"
-
-#: checks/basic.php:34
-msgid "register_sidebar() or register_sidebars()"
-msgstr "register_sidebar() または register_sidebars()"
 
 #: checks/cdn.php:32
 msgid "Found the URL of a CDN in the code: %s. You should not load CSS or Javascript resources from a CDN, please bundle them with the theme."
 msgstr "コー​​ド内に CDN の URL (%s) が見つかりました。JavaScript や CSS を CDN で読み込まずに、テーマに同梱してください。"
 
 #: checks/comment_reply.php:18 checks/iframes.php:20 checks/include.php:19
-#: checks/links.php:25 checks/nonprintable.php:16 checks/time_date.php:22
+#: checks/links.php:26 checks/nonprintable.php:16 checks/textdomain.php:138
+#: checks/textdomain.php:143 checks/time_date.php:22
 msgid "INFO"
 msgstr "情報"
 
@@ -491,29 +507,17 @@ msgstr "情報"
 msgid "Could not find the <strong>comment-reply</strong> script enqueued. %1$s"
 msgstr "待機状態の<strong>コメント返信</strong>のスクリプトを見つけることができません。%1$s"
 
-#: checks/commpage.php:15
-msgid "The theme doesn't have comment pagination code in it. Use <strong>paginate_comments_links()</strong> or <strong>next_comments_link()</strong> and <strong>previous_comments_link()</strong> to add comment pagination."
-msgstr "このテーマにはページ送りがありません。 <strong>paginate_comments_links()</strong> または、 <strong>next_comments_link()</strong> と <strong>previous_comments_link()</strong> を追加してください。"
-
 #: checks/customizer.php:31
 msgid "Found a Customizer setting that had an empty value passed as sanitization callback. You need to pass a function name as sanitization callback."
 msgstr "サニタイゼーションコールバックに空の値が渡されているカスタマイザー設定がありました。サニタイゼーションコールバックには関数名を渡す必要があります。"
 
-#: checks/dep_recommend.php:44 checks/deprecated.php:246
+#: checks/dep_recommend.php:51 checks/deprecated.php:279
 msgid "Use %s instead."
 msgstr "代わりに %s を使う。"
 
 #: checks/editorstyle.php:13
 msgid "No reference to <strong>add_editor_style()</strong> was found in the theme. It is recommended that the theme implement editor styling, so as to make the editor content match the resulting post output in the theme, for a better user experience."
 msgstr "<strong>add_editor_style()</strong> が見つかりません。エディタの内容を投稿の出力結果と同じにして使いやすくするために、エディタへのスタイリングをテーマで実装することが推奨されています。"
-
-#: checks/i18n.php:49
-msgid "Possible variable <strong>%1$s</strong> found in translation function in <strong>%2$s</strong>. Translation function calls must NOT contain PHP variables. %3$s"
-msgstr "ファイル <strong>%2$s</strong> の翻訳関数に変数の可能性がある <strong>%1$s</strong> が見つかりました。翻訳関数の呼び出しに PHP 変数を含めることはできません。%3$s"
-
-#: checks/include.php:19
-msgid "<strong>%1$s</strong> %2$s %3$s"
-msgstr "<strong>%1$s</strong> %2$s %3$s"
 
 #: checks/customs.php:14
 msgid "No reference to <strong>add_theme_support( \"custom-header\", $args )</strong> was found in the theme. It is recommended that the theme implement this functionality if using an image for the header."
@@ -539,11 +543,6 @@ msgstr "<a href=\"http://wpdocs.osdn.jp/%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%
 msgid "Found a Customizer setting that did not have a sanitization callback function. Every call to the <strong>add_setting()</strong> method needs to have a sanitization callback function passed."
 msgstr "サニタイゼーションコールバック関数を使っていないカスタマイザー設定があります。<strong>add_setting()</strong> メソッドへのコールはすべてサニタイゼーションコールバック関数を通す必要があります。"
 
-#: checks/constants.php:24 checks/more_deprecated.php:52 checks/required.php:22
-#: checks/suggested.php:34
-msgid "<strong>%1$s</strong> was found in the file <strong>%2$s</strong>. Use <strong>%3$s</strong> instead.%4$s"
-msgstr "<strong>%1$s</strong> が <strong>%2$s</strong> ファイルで見つかりました。%4$s の代わりに <strong>%3$s</strong> を使用してください。"
-
 #: checks/basic.php:19
 msgid "See: <a href=\"https://codex.wordpress.org/Function_Reference/add_theme_support\">add_theme_support</a><pre> &lt;?php add_theme_support( $feature ); ?&gt;</pre>"
 msgstr "<a href=\"http://wpdocs.osdn.jp/%E9%96%A2%E6%95%B0%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9/add_theme_support\">add_theme_support</a><pre> &lt;?php add_theme_support( $feature ); ?&gt;</pre> を参照してください。"
@@ -560,7 +559,7 @@ msgstr "<a href=\"http://wpdocs.osdn.jp/%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%
 msgid "See: <a href=\"https://codex.wordpress.org/Template_Tags/body_class\">body_class</a><pre> &lt;?php body_class( $class ); ?&gt;</pre>"
 msgstr "<a href=\"http://wpdocs.osdn.jp/%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E3%82%BF%E3%82%B0/body_class\">body_class</a><pre> &lt;?php body_class( $class ); ?&gt;</pre> を参照してください。"
 
-#: checks/dep_recommend.php:36 checks/deprecated.php:238
+#: checks/dep_recommend.php:43 checks/deprecated.php:271
 msgid "%1$s found in the file %2$s. Deprecated since version %3$s."
 msgstr "%1$s が %2$s ファイルで見つかりました。バージョン%3$sでは推奨されていません。"
 
@@ -571,14 +570,6 @@ msgstr "<a href=\"http://wpdocs.osdn.jp/%E9%96%A2%E6%95%B0%E3%83%AA%E3%83%95%E3%
 #: checks/basic.php:15
 msgid "See: <a href=\"https://codex.wordpress.org/Function_Reference/wp_footer\">wp_footer</a><pre> &lt;?php wp_footer(); ?&gt;</pre>"
 msgstr "<a href=\"http://wpdocs.osdn.jp/%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E3%82%BF%E3%82%B0/wp_footer\">wp_footer</a>をご覧ください。<pre> &lt;?php wp_footer(); ?&gt;</pre>"
-
-#: checks/iframes.php:20 checks/malware.php:23
-msgid "<strong>%1$s</strong> was found in the file <strong>%2$s</strong> %3$s.%4$s"
-msgstr "<strong>%2$s</strong> ファイルで <strong>%1$s</strong> が見つかりました。%3$s.%4$s"
-
-#: checks/filenames.php:43
-msgid "<strong>%1$s</strong> %2$s found."
-msgstr "<strong>%1$s</strong> %2$sが見つかりました。"
 
 #: checks/basic.php:20
 msgid "See: <a href=\"https://codex.wordpress.org/Template_Tags/comments_template\">comments_template</a><pre> &lt;?php comments_template( $file, $separate_comments ); ?&gt;</pre>"
@@ -592,25 +583,17 @@ msgstr "<a href=\"http://wpdocs.osdn.jp/%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%
 msgid "See: <a href=\"https://codex.wordpress.org/Template_Tags/post_class\">post_class</a><pre> &lt;div id=\"post-&lt;?php the_ID(); ?&gt;\" &lt;?php post_class(); ?&gt;&gt;</pre>"
 msgstr "<a href=\"http://wpdocs.osdn.jp/%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E3%82%BF%E3%82%B0/post_class\">post_class</a><pre> &lt;div id=\"post-&lt;?php the_ID(); ?&gt;\" &lt;?php post_class(); ?&gt;&gt;</pre> を参照してください。"
 
-#: checks/filenames.php:57
-msgid "could not find the file <strong>%1$s</strong> in the theme. %2$s"
-msgstr "テーマ内に <strong>%1$s</strong> ファイルが見つかりませんでした。 %2$s"
-
-#: checks/admin_menu.php:44 checks/basic.php:36 checks/comment_reply.php:15
-#: checks/commpage.php:15 checks/content-width.php:14 checks/customizer.php:26
-#: checks/customizer.php:31 checks/deprecated.php:253 checks/directories.php:27
+#: checks/admin_menu.php:49 checks/basic.php:34 checks/comment_reply.php:15
+#: checks/commpage.php:16 checks/content-width.php:14 checks/customizer.php:26
+#: checks/customizer.php:31 checks/deprecated.php:286 checks/directories.php:27
 #: checks/gravatar.php:15 checks/more_deprecated.php:52
 #: checks/plugin-territory.php:24 checks/post-formats.php:27
-#: checks/postsnav.php:18 checks/required.php:22 checks/searchform.php:16
-#: checks/style_needed.php:30 checks/tags.php:13 checks/title.php:29
-#: checks/title.php:38 checks/title.php:53 checks/widgets.php:21
+#: checks/postsnav.php:19 checks/required.php:22 checks/searchform.php:16
+#: checks/style_needed.php:31 checks/tags.php:13 checks/title.php:27
+#: checks/title.php:34 checks/title.php:48 checks/widgets.php:21
 #: checks/widgets.php:26 checks/widgets.php:34
 msgid "REQUIRED"
 msgstr "必須"
-
-#: checks/basic.php:32
-msgid "wp_enqueue_script( 'comment-reply' )"
-msgstr "wp_enqueue_script( 'comment-reply' )"
 
 #: checks/basic.php:31
 msgid "add_theme_support( 'automatic-feed-links' )"
@@ -620,13 +603,9 @@ msgstr "add_theme_support( 'automatic-feed-links' )"
 msgid "Google advertising code detected"
 msgstr "Google 広告コードが検出されました"
 
-#: checks/basic.php:33
+#: checks/basic.php:32
 msgid "body_class call in body tag"
 msgstr "body タグ内の body_class 呼び出し"
-
-#: checks/filenames.php:50
-msgid "could not find the file <strong>%1$s</strong> in the theme."
-msgstr "テーマ内に <strong>%1$s</strong> ファイルが見つかりませんでした。"
 
 #: checks/content-width.php:14
 msgid "No content width has been defined. Example: <pre>if ( ! isset( $content_width ) ) $content_width = 900;</pre>"
@@ -680,7 +659,7 @@ msgstr "'comment-reply' への参照が見つかりましたが、<strong>commen
 msgid "There must be a charset defined in the Content-Type or the meta charset tag in the head."
 msgstr "ヘッダー内の Content-Type もしくは meta charset タグ内に charset の設定が必ず必要です。"
 
-#: checks/admin_menu.php:33
+#: checks/admin_menu.php:34
 msgid "Themes should use <strong>add_theme_page()</strong> for adding admin pages."
 msgstr "管理画面ページの追加は <strong>add_theme_page()</strong> を使ってください。"
 
@@ -732,10 +711,14 @@ msgstr "このテーマは自動的に生成されたテーマのようです。
 msgid "iframes are sometimes used to load unwanted adverts and code on your site"
 msgstr "iframes は、無用な広告やコードのサイトへの読み込みに使われることがあります"
 
-#: checkbase.php:254
+#: checkbase.php:263
 msgid "Anonymous"
 msgstr "匿名"
 
-#: checkbase.php:251
+#: checkbase.php:260
 msgid "Visit author homepage"
 msgstr "作成者のホームページを表示"
+
+#: checks/commpage.php:16
+msgid "The theme doesn't have comment pagination code in it. Use <strong>paginate_comments_links()</strong> or <strong>the_comments_navigation</strong> or <strong>next_comments_link()</strong> and <strong>previous_comments_link()</strong> to add comment pagination."
+msgstr "このテーマにはページ送りがありません。<strong>paginate_comments_links()</strong>, <strong>the_comments_navigation</strong>, <strong>next_comments_link()</strong>, <strong>previous_comments_link()</strong> のいずれかを追加してください。"

@@ -1,10 +1,10 @@
 <?php
 /**
  * Smart_Custom_Fields_Field_Relation
- * Version    : 1.3.0
+ * Version    : 1.3.1
  * Author     : inc2734
  * Created    : October 7, 2014
- * Modified   : November 12, 2015
+ * Modified   : February 1, 2016
  * License    : GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -21,7 +21,7 @@ class Smart_Custom_Fields_Field_Relation extends Smart_Custom_Fields_Field_Base 
 		add_filter( 'smart-cf-validate-get-value', array( $this, 'validate_get_value' ), 10, 2 );
 		return array(
 			'type'                => 'relation',
-			'display-name'        => __( 'Relation', 'smart-custom-fields' ),
+			'display-name'        => __( 'Relation ( Post Types )', 'smart-custom-fields' ),
 			'optgroup'            => 'other-fields',
 			'allow-multiple-data' => true,
 		);
@@ -47,16 +47,16 @@ class Smart_Custom_Fields_Field_Relation extends Smart_Custom_Fields_Field_Base 
 	public function admin_enqueue_scripts( $hook ) {
 		if ( in_array( $hook, array( 'post-new.php', 'post.php', 'user-edit.php', 'profile.php', 'edit-tags.php' ) ) ) {
 			wp_enqueue_script(
-				SCF_Config::PREFIX . 'editor-relation',
-				plugins_url( SCF_Config::NAME ) . '/js/editor-relation.js',
+				SCF_Config::PREFIX . 'editor-relation-post-types',
+				plugins_url( SCF_Config::NAME ) . '/js/editor-relation-post-types.js',
 				array( 'jquery' ),
 				null,
 				true
 			);
-			wp_localize_script( SCF_Config::PREFIX . 'editor-relation', 'smart_cf_relation', array(
+			wp_localize_script( SCF_Config::PREFIX . 'editor-relation-post-types', 'smart_cf_relation_post_types', array(
 				'endpoint' => admin_url( 'admin-ajax.php' ),
 				'action'   => SCF_Config::PREFIX . 'relational-posts-search',
-				'nonce'    => wp_create_nonce( SCF_Config::NAME . '-relation' )
+				'nonce'    => wp_create_nonce( SCF_Config::NAME . '-relation-post-types' )
 			) );
 		}
 	}
@@ -65,7 +65,7 @@ class Smart_Custom_Fields_Field_Relation extends Smart_Custom_Fields_Field_Base 
 	 * Process that loading post when clicking post load button
 	 */
 	public function relational_posts_search() {
-		check_ajax_referer( SCF_Config::NAME . '-relation', 'nonce' );
+		check_ajax_referer( SCF_Config::NAME . '-relation-post-types', 'nonce' );
 		$_posts = array();
 		$args = array();
 		if ( isset( $_POST['post_types'] ) ) {
@@ -76,7 +76,7 @@ class Smart_Custom_Fields_Field_Relation extends Smart_Custom_Fields_Field_Base 
 				'orderby'   => 'ID',
 				'posts_per_page' => -1,
 			);
-			
+
 			if ( isset( $_POST['click_count'] ) ) {
 				$posts_per_page = get_option( 'posts_per_page' );
 				$offset = $_POST['click_count'] * $posts_per_page;
@@ -88,7 +88,7 @@ class Smart_Custom_Fields_Field_Relation extends Smart_Custom_Fields_Field_Base 
 					)
 				);
 			}
-			
+
 			if ( isset( $_POST['s'] ) ) {
 				$args = array_merge(
 					$args,
@@ -175,11 +175,11 @@ class Smart_Custom_Fields_Field_Relation extends Smart_Custom_Fields_Field_Base 
 		return sprintf(
 			'<div class="%s" data-post-types="%s">
 				<div class="%s">
-					<input type="text" class="widefat search-input" name="search-input" placeholder="%s" />
+					<input type="text" class="widefat search-input search-input-post-types" name="search-input" placeholder="%s" />
 				</div>
 				<div class="%s">
 					<ul>%s</ul>
-					<p class="load-relation-posts %s">%s</p>
+					<p class="load-relation-items load-relation-post-types %s">%s</p>
 					<input type="hidden" name="%s" %s />
 					%s
 				</div>
