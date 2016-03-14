@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2016-01-30 06:55:12+0000\n"
+"PO-Revision-Date: 2016-02-13 18:16:55+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -180,6 +180,10 @@ msgstr "Codex のリンク"
 msgid "Themes and Templates forum"
 msgstr "テーマとテンプレートのフォーラム"
 
+#: main.php:122
+msgid "Make sure to review the guidelines at <a href=\"https://codex.wordpress.org/Theme_Review\">Theme Review</a> before uploading a Theme."
+msgstr "テーマをアップロードする前に、<a href=\"http://wpdocs.sourceforge.jp/Theme_Review\">テーマレビュー</a>のガイドラインを復習するのを忘れないようにしてください。"
+
 #: main.php:121
 msgid "Now your theme has passed the basic tests you need to check it properly using the test data before you upload to the WordPress Themes Directory."
 msgstr "テーマは、基本的なテストを通過しました。WordPress テーマディレクトリに投稿する前には、必ずテストデータを使って確認する必要があります。"
@@ -283,6 +287,10 @@ msgstr "テーマにサイドバー/ウィジェットエリアがありませ�
 #: main.php:91
 msgid "%1$s passed the tests"
 msgstr "%1$s はテストに通りました"
+
+#: main.php:94
+msgid "<strong>WP_DEBUG is not enabled!</strong> Please test your theme with <a href=\"https://codex.wordpress.org/Editing_wp-config.php\">debug enabled</a> before you upload!"
+msgstr "<strong>WP_DEBUG が無効になっています。</strong>テーマをアップロードする前に<a href=\"http://wpdocs.sourceforge.jp/wp-config.php_%E3%81%AE%E7%B7%A8%E9%9B%86\">デバッグモードを有効</a>にしてからテストしてください。"
 
 #: checks/style_needed.php:24
 msgid "<strong>.gallery-caption</strong> css class is needed in your theme css."
