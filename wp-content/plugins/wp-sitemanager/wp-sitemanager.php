@@ -4,7 +4,7 @@
  Plugin URI: http://www.prime-strategy.co.jp/
  Description: WP SiteManager is an integrated package comprising of necessary functions for using WordPress as a CMS.
  Author: Prime Strategy Co.,LTD.
- Version: 1.1.8
+ Version: 1.1.11
  Author URI: http://www.prime-strategy.co.jp/
  License: GPLv2 or later
 */
@@ -99,6 +99,7 @@ class WP_SiteManager {
 	private function load_modules() {
 		$installed_modules = $this->get_modules();
 		$disabled_modules = $this->get_disabled_modules();
+
 		foreach ( $installed_modules as $slug => $module ) {
 			if ( ! in_array( $slug, $disabled_modules ) ) {
 				$instanse = str_replace( '-', '_', $slug );
@@ -287,7 +288,19 @@ endif;
 	 * @since 0.0.1
 	 */
 	private function get_disabled_modules() {
-		return apply_filters( 'wp-sitemanager/disabled_modules', get_option( 'disabled_modules', array() ) );
+		$disabled_modules = apply_filters( 'wp-sitemanager/disabled_modules', get_option( 'disabled_modules', array() ) );
+		if ( defined( 'WPSM_DISABLE_DEVICE' ) && WPSM_DISABLE_DEVICE ) {
+			if ( ! in_array( 'theme_switcher', $disabled_modules ) ) {
+				$disabled_modules[] = 'theme_switcher';
+			}
+		}
+
+		if ( defined( 'WPSM_DISABLE_CACHE' ) && WPSM_DISABLE_DEVICE ) {
+			if ( ! in_array( 'site-cache', $disabled_modules ) ) {
+				$disabled_modules[] = 'site-cache';
+			}
+		}
+		return $disabled_modules;
 	}
 
 	/*
@@ -317,6 +330,17 @@ endif;
 		
 		if ( $files ) {
 			foreach ( $files as $file ) {
+				if ( defined( 'WPSM_DISABLE_DEVICE' ) && WPSM_DISABLE_DEVICE ) {
+					if ( 'theme_switcher.php' == basename( $file ) ) {
+						continue;
+					}
+				}
+
+				if ( defined( 'WPSM_DISABLE_CACHE' ) && WPSM_DISABLE_DEVICE ) {
+					if ( 'site-cache.php' == basename( $file ) ) {
+						continue;
+					}
+				}
 				$headers = $this->get_module_headers( $file );
 
 				if ( $headers['name'] ) {

@@ -42,7 +42,7 @@ function __construct( $parent ) {
 //		add_action( 'profile_update'                               , array( $this, 'clear_all_cache' ) );
 	} else {
 		add_action( 'init'                                         , array( $this, 'buffer_start' ) );
-
+		add_filter( 'wp_headers'                                   , array( $this, 'add_b_cache_header' ) );
 //		add_action( 'template_redirect'                            , array( $this, 'check_vars' ) );
 	}
 	add_action( 'init'                                             , array( $this, 'check_installed' ) );
@@ -50,7 +50,7 @@ function __construct( $parent ) {
 //	add_action( 'comment_post'                                     , array( $this, 'new_comment' ), 10, 2 );
 }
 
-function check_installed() {
+public function check_installed() {
 	$version = get_option( 'site_manager_cache_installed', false );
 	if ( ! $version ) {
 		$this->create_cache_table();
@@ -62,7 +62,7 @@ function check_installed() {
 		$this->update_cache_table( 3 );
 	}
 }
-function create_cache_table() {
+private function create_cache_table() {
 	global $cache_db;
 
 	$charset_collate = $cache_db->get_charset_collate();
@@ -125,11 +125,11 @@ ADD INDEX	( `updating` )";
 }
 
 
-function add_setting_menu() {
+public function add_setting_menu() {
 	add_submenu_page( $this->parent->root, 'キャッシュ', 'キャッシュ', 'administrator', basename( $this->parent->root ) . '-cache', array( $this, 'cache_setting_page' ) );
 }
 
-function cache_setting_page() {
+public function cache_setting_page() {
 	$life_time = get_option( 'site_cache_life', array( 'home' => 60, 'archive' => 60, 'singular' => 360, 'exclude' => '', 'allowed_query_keys' => '', 'update' => 'none' ) );
 	$clear_link = add_query_arg( array( 'del_cache' => '1' ) );
 	$advanced_cache_link = add_query_arg( array( 'generate_advanced_cache' => '1' ) );
@@ -210,7 +210,7 @@ function cache_setting_page() {
 <?php
 }
 
-function update_cache_setting() {
+public function update_cache_setting() {
 	if ( isset( $_GET['del_cache'] ) && $_GET['del_cache'] == '1' && apply_filters( 'allow_sitemanager_cache_clear', true ) ) {
 		$this->clear_all_cache();
 		$redirect = remove_query_arg( 'del_cache' );
@@ -239,7 +239,7 @@ function update_cache_setting() {
 }
 
 
-function is_writable_advanced_cache_file() {
+private function is_writable_advanced_cache_file() {
 	$writable = false;
 	if ( file_exists( WP_CONTENT_DIR . '/advanced-cache.php' ) ) {
 		if ( is_writable( WP_CONTENT_DIR . '/advanced-cache.php' ) ) {
@@ -254,7 +254,7 @@ function is_writable_advanced_cache_file() {
 }
 
 
-function check_advanced_cache_file() {
+private function check_advanced_cache_file() {
 	if ( file_exists( WP_CONTENT_DIR . '/advanced-cache.php' ) ) {
 		if ( is_readable( WP_CONTENT_DIR . '/advanced-cache.php' ) ) {
 			$file_content = file_get_contents( WP_CONTENT_DIR . '/advanced-cache.php' );
@@ -270,30 +270,30 @@ function check_advanced_cache_file() {
 	return true;
 }
 
-function check_vars() {
+public function check_vars() {
 	var_dump( $_SERVER );
 }
 
-function buffer_start() {
+public function buffer_start() {
 	if ( defined( 'WP_CACHE' ) && WP_CACHE && isset( $_SERVER['REQUEST_URI'] ) && isset( $_SERVER['HTTP_USER_AGENT'] ) && isset( $_SERVER['REQUEST_METHOD'] ) && isset( $_SERVER['SCRIPT_NAME'] ) && isset( $_SERVER['SERVER_NAME'] ) ) {
 		ob_start( 'write_cache_file' );
 	}
 
 }
 
-function write_cache_file() {
+public function write_cache_file() {
 	$buffer = ob_get_contents();
 }
 
 
-function clear_all_cache() {
+private function clear_all_cache() {
 	global $cache_db;
 	$sql = "TRUNCATE TABLE `{$cache_db->prefix}site_cache`";
 	$cache_db->query( $sql );
 }
 
 
-function clear_front_cache() {
+private function clear_front_cache() {
 	global $cache_db;
 	$sql = "
 DELETE
@@ -304,7 +304,7 @@ WHERE	`type` = 'front'
 }
 
 
-function clear_single_cache( $post ) {
+private function clear_single_cache( $post ) {
 	global $cache_db;
 	
 	$regexes = get_option( 'sitemanager_device_rules', array() );
@@ -341,7 +341,7 @@ AND		`hash` IN ( '{$hashes}' )
 }
 
 
-function post_publish_clear_cache( $new_status, $old_status, $post ) {
+public function post_publish_clear_cache( $new_status, $old_status, $post ) {
 	if ( $new_status == 'publish' ) {
 		$life_time = get_option( 'site_cache_life', array( 'update' => 'none' ) );
 		switch ( $life_time['update'] ) {
@@ -360,21 +360,27 @@ function post_publish_clear_cache( $new_status, $old_status, $post ) {
 }
 
 
-function transition_comment_status( $new_status, $old_status, $comment ) {
+public function transition_comment_status( $new_status, $old_status, $comment ) {
 	if ( $new_status == 'approved' || $old_status == 'approved' ) {
 		$this->clear_all_cache();
 	}
 }
 
 
-function new_comment( $comment_ID, $approved ) {
+public function new_comment( $comment_ID, $approved ) {
 	if ( $approved === 1 ) {
 		$this->clear_all_cache();
 	}
 }
 
 
-function generate_advanced_cache_file() {
+public function add_b_cache_header( $headers ) {
+	$headers['X-B-Cache'] = 'BYPASS';
+	return $headers;
+}
+
+
+public function generate_advanced_cache_file() {
 	global $wpdb, $wp;
 
 	$advanced_cache_file = WP_CONTENT_DIR . '/advanced-cache.php';
@@ -464,6 +470,7 @@ ORDER BY `blog_id` ASC";
 
 } // class end
 $this->instance->$instanse = new WP_SiteManager_cache( $this );
+
 
 function write_cache_file( $buffer ) {
 	global $WP_SiteManager, $cache_db, $wp;
@@ -673,6 +680,15 @@ WHERE	`hash` = '$hash'
 		} elseif ( strpos( $row->content, '<!-- page cached by KUSANAGI. ' ) === false || strpos( $row->content, '<!-- page cached by WP SiteManager. ' ) === false ) {
 			$cache_db->update( $cache_db->prefix . 'site_cache', $data, array( 'hash' => $hash, 'type' => $type, 'expire_time' => $row->expire_time ), array( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s' ), array( '%s', '%s', '%s' ) );
 		}
+	}
+	
+	$replace_class_file  = WP_CONTENT_DIR . '/replace-class.php';
+	if ( is_multisite() && 1 != get_current_blog_id() ) {
+		$replace_class_file = WP_CONTENT_DIR . '/replace-class-' . get_current_blog_id() . '.php';
+	}
+	if ( file_exists( $replace_class_file ) ) {
+		include_once( $replace_class_file );
+		$buffer = KUSANAGI_Replace::replace( $buffer );
 	}
 	return $buffer;
 }

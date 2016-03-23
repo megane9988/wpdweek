@@ -1,13 +1,13 @@
-=== Instant Articles for WP ===
-Contributors: trrine, olethomas, bjornjohansen, dekode, automattic
+=== Facebook Instant Articles for WP ===
+Contributors: automattic, bjornjohansen, dekode, trrine, olethomas, philipjohn
 Tags: instant articles, facebook, mobile
 Requires at least: 4.3
 Tested up to: 4.4
-Stable tag: 0.1
+Stable tag: 0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Enable [Instant Articles for Facebook](https://developers.facebook.com/docs/instant-articles) on your WordPress site.
+Enable Instant Articles for Facebook on your WordPress site.
 
 == Description ==
 
@@ -50,6 +50,12 @@ By default it is set to `instant-articles` which usually will give you a feed UR
 Usually simply visiting the permalinks settings page in the WordPress dashboard will do the trick (/wp-admin/options-permalink.php)
 
 == Changelog ==
+
+= 0.2 =
+
+* Fixes bug in formatting of YouTube videos
+* Fixes bug in formatting of Facebook embeds
+* Adds support for subtitles - see `instant_articles_subtitle` filter
 
 = 0.1 =
 * Initial version

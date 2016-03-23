@@ -2,11 +2,11 @@
 /**
  * Name       : MW WP Form Mail
  * Description: メールクラス
- * Version    : 1.5.1
+ * Version    : 1.6.0
  * Author     : Takashi Kitajima
  * Author URI : http://2inc.org
  * Created    : July 20, 2012
- * Modified   : April 14, 2015
+ * Modified   : February 14, 2016
  * License    : GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -59,6 +59,11 @@ class MW_WP_Form_Mail {
 	 * @var array
 	 */
 	public $attachments = array();
+
+	/**
+	 * @var MW_WP_Form_Mail_Parser
+	 */
+	protected $Mail_Parser;
 
 	/**
 	 * メール送信
@@ -122,7 +127,10 @@ class MW_WP_Form_Mail {
 	 * @return string
 	 */
 	public function set_mail_from( $email ) {
-		return $this->from;
+		if ( filter_var( $this->from, FILTER_VALIDATE_EMAIL ) ) {
+			return $this->from;
+		}
+		return $email;
 	}
 
 	/**
@@ -304,10 +312,10 @@ class MW_WP_Form_Mail {
 			$this->to = $admin_mail_to;
 		}
 		if ( !$this->from ) {
-			$this->from = $admin_mail_from;;
+			$this->from = $admin_mail_from;
 		}
 		if ( !$this->sender ) {
-			$this->sender = $admin_mail_sender;;
+			$this->sender = $admin_mail_sender;
 		}
 	}
 
@@ -334,11 +342,22 @@ class MW_WP_Form_Mail {
 	 */
 	public function parse( $Setting, $do_update = false ) {
 		$Data = MW_WP_Form_Data::getInstance();
-		
-		$Mail_Parser = new MW_WP_Form_Mail_Parser( $this, $Setting );
-		$Mail = $Mail_Parser->get_parsed_mail_object( $do_update );
+
+		$this->Mail_Parser = new MW_WP_Form_Mail_Parser( $this, $Setting );
+		$Mail = $this->Mail_Parser->get_parsed_mail_object( $do_update );
 		foreach ( get_object_vars( $Mail ) as $key => $value ) {
 			$this->$key = $value;
+		}
+	}
+
+	/**
+	 * 保存した問い合わせデータの Post IDを取得する
+	 *
+	 * @return int
+	 */
+	public function get_saved_mail_id(){
+		if ( $this->Mail_Parser ) {
+			return $this->Mail_Parser->get_saved_mail_id();
 		}
 	}
 }

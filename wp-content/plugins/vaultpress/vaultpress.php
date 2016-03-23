@@ -3,7 +3,7 @@
  * Plugin Name: VaultPress
  * Plugin URI: http://vaultpress.com/?utm_source=plugin-uri&amp;utm_medium=plugin-description&amp;utm_campaign=1.0
  * Description: Protect your content, themes, plugins, and settings with <strong>realtime backup</strong> and <strong>automated security scanning</strong> from <a href="http://vaultpress.com/?utm_source=wp-admin&amp;utm_medium=plugin-description&amp;utm_campaign=1.0" rel="nofollow">VaultPress</a>. Activate, enter your registration key, and never worry again. <a href="http://vaultpress.com/help/?utm_source=wp-admin&amp;utm_medium=plugin-description&amp;utm_campaign=1.0" rel="nofollow">Need some help?</a>
- * Version: 1.7.8
+ * Version: 1.8.0
  * Author: Automattic
  * Author URI: http://vaultpress.com/?utm_source=author-uri&amp;utm_medium=plugin-description&amp;utm_campaign=1.0
  * License: GPL2+
@@ -15,9 +15,10 @@
 defined( 'ABSPATH' ) or die();
 
 class VaultPress {
-	var $option_name    = 'vaultpress';
-	var $db_version     = 4;
-	var $plugin_version = '1.7.8';
+	var $option_name          = 'vaultpress';
+	var $auto_register_option = 'vaultpress_auto_register';
+	var $db_version           = 4;
+	var $plugin_version       = '1.8.0';
 
 	function __construct() {
 		register_activation_hook( __FILE__, array( $this, 'activate' ) );
@@ -40,8 +41,11 @@ class VaultPress {
 
 		$this->upgrade();
 
-		if ( is_admin() )
+		$this->add_global_actions_and_filters();
+
+		if ( is_admin() ) {
 			$this->add_admin_actions_and_filters();
+		}
 
 		if ( $this->is_registered() ) {
 			$do_not_backup = $this->get_option( 'do_not_backup' ) || $this->get_option( 'do_not_send_backup_pings' );
@@ -1055,10 +1059,10 @@ class VaultPress {
 	// Update local cache of VP plan settings, based on a ping or connection test result
 	function update_plan_settings( $message ) {
 		if ( array_key_exists( 'do_backups', $message ) )	
-			$this->update_option( 'do_not_backup', ( false === $message['do_backups'] ) );
+			$this->update_option( 'do_not_backup', ( false === $message['do_backups'] ) || ( '' === $message['do_backups'] ) );
 			
 		if ( array_key_exists( 'do_backup_pings', $message ) )
-			$this->update_option( 'do_not_send_backup_pings', ( false === $message['do_backup_pings'] ) );
+			$this->update_option( 'do_not_send_backup_pings', ( false === $message['do_backup_pings'] ) || ( '' === $message['do_backup_pings'] ) );
 	}
 
 	function check_connection( $force_check = false ) {
@@ -1085,7 +1089,8 @@ class VaultPress {
 		// initial connection test to server
 		$this->update_option( 'connection_test', true );
 		$this->delete_option( 'allow_forwarded_for' );
-		$connect = $this->contact_service( 'test', array( 'host' => $_SERVER['HTTP_HOST'], 'uri' => $_SERVER['REQUEST_URI'], 'ssl' => is_ssl() ) );
+		$host = ( ! empty( $_SERVER['HTTP_HOST'] ) ) ? $_SERVER['HTTP_HOST'] : parse_url( $this->site_url(), PHP_URL_HOST );
+		$connect = $this->contact_service( 'test', array( 'host' => $host, 'uri' => $_SERVER['REQUEST_URI'], 'ssl' => is_ssl() ) );
 
 		// we can't see the servers at all
 		if ( !$connect ) {
@@ -2131,8 +2136,10 @@ JS;
 				usleep(500000);
 		} while ( true );
 		if ( !$rval ) {
-			$__vp_recursive_ping_lock = true;
-			$this->ai_ping_insert( serialize( $vaultpress_pings ) );
+			if ( $this->get_option( 'connection_error_code' ) !== -8 ) {    // Do not save pings when the subscription is inactive.
+				$__vp_recursive_ping_lock = true;
+				$this->ai_ping_insert( serialize( $vaultpress_pings ) );
+			}
 		}
 		$this->reset_pings();
 		if ( $close_wpdb ) {
@@ -2231,6 +2238,56 @@ JS;
 			$site_url = site_url();
 
 		return $site_url;
+	}
+
+	/**
+	 * Sync the VaultPress options to WordPress.com if the Jetpack plugin is active.
+	 */
+	function sync_jetpack_options() {
+		if ( class_exists( 'Jetpack_Sync' ) ) {
+			Jetpack_Sync::sync_options( __FILE__, $this->auto_register_option, $this->option_name );
+		}
+	}
+
+	/**
+	 * Add the VaultPress options to the Jetpack options management whitelist.
+	 * Allows Jetpack to register VaultPress options automatically.
+	 *
+	 * @param array $options The list of whitelisted option names.
+	 *
+	 * @return array The updated whitelist
+	 */
+	function add_to_jetpack_options_whitelist( $options ) {
+		$options[] = $this->option_name;
+		$options[] = $this->auto_register_option;
+
+		return $options;
+	}
+
+	/**
+	 * When the VaultPress auto-register option is updated, run the registration call.
+	 *
+	 * This should only be run when the option is updated from the Jetpack/WP.com
+	 * API call, and only if the new key is different than the old key.
+	 *
+	 * @param mixed $old_value The old option value.
+	 * @param mixed $value     The new option value.
+	 */
+	function updated_auto_register_option( $old_value, $value ) {
+		// Not an API call or CLI call
+		if ( ! class_exists( 'WPCOM_JSON_API_Update_Option_Endpoint' ) && ! ( defined( 'WP_CLI' ) && WP_CLI ) ) {
+			return;
+		}
+
+		$this->register( $value );
+		delete_option( $this->auto_register_option );
+	}
+
+	function add_global_actions_and_filters() {
+		add_action( 'init',                                        array( $this, 'sync_jetpack_options' ), 0, 99 );
+		add_filter( 'jetpack_options_whitelist',                   array( $this, 'add_to_jetpack_options_whitelist' ) );
+		add_action( "update_option_{$this->auto_register_option}", array( $this, 'updated_auto_register_option' ), 10, 2 );
+		add_action( "add_option_{$this->auto_register_option}",    array( $this, 'updated_auto_register_option' ), 10, 2 );
 	}
 
 	function add_admin_actions_and_filters() {

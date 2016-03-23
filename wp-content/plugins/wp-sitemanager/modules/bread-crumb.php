@@ -175,10 +175,10 @@ private function get_bread_crumb_array( $args ) {
 			$ancestors = array_reverse( get_ancestors( $term->term_id, $taxonomy ) );
 			foreach ( $ancestors as $ancestor_id ) {
 				$ancestor = get_term( $ancestor_id, $taxonomy );
-				$bread_crumb_arr[] = array( 'title' => $ancestor->name, 'link' => get_term_link( $ancestor, $term->slug ) );
+				$bread_crumb_arr[] = array( 'title' => $ancestor->name, 'link' => get_term_link( $ancestor, $taxonomy ) );
 			}
 		}
-		$bread_crumb_arr[] = array( 'title' => sprintf( $args['taxonomy_label'], $term->name ), 'link' => get_term_link( $term->term_id, $term->slug ) );
+		$bread_crumb_arr[] = array( 'title' => sprintf( $args['taxonomy_label'], $term->name ), 'link' => get_term_link( $term->term_id, $taxonomy ) );
 	} elseif ( is_attachment() ) {
 		if ( $post->post_parent ) {
 			if ( $parent_post = get_post( $post->post_parent ) ) {

@@ -548,7 +548,7 @@ private function og_get_image( $width = 1200, $height = 630 ) { // Facebook requ
 		$image = false;
 	}
 
-	return apply_filters( 'wp_sitemanager_open_graph_image', $image );
+	return apply_filters( 'wp_sitemanager_open_graph_image', $image, $width, $height );
 }
 
 

@@ -10,6 +10,7 @@ class SiteManagerAdvancedCache {
 	);
 	private $allowed_query_keys;
 	private $site_mode = ### SITE MODE ###;
+	private $replace_class_file;
 
 	function __construct() {
 		global $table_prefix;
@@ -71,6 +72,7 @@ class SiteManagerAdvancedCache {
 			$add_prefix = isset( $this->sites[$_SERVER['SERVER_NAME']] ) && $this->sites[$_SERVER['SERVER_NAME']] != 1 ? $this->sites[$_SERVER['SERVER_NAME']] . '_' : '';
 			$site_id = isset( $this->sites[$_SERVER['SERVER_NAME']] ) ? $this->sites[$_SERVER['SERVER_NAME']] : '';
 			$table = $table_prefix . $add_prefix;
+			$this->replace_class_file = WP_CONTENT_DIR . '/replace-class-' . $site_id . '.php';
 			break;
 		case 'directory' :
 			$key = '/';
@@ -80,6 +82,7 @@ class SiteManagerAdvancedCache {
 			$add_prefix = isset( $this->sites[$key] ) && $this->sites[$key] != 1 ? $this->sites[$key] . '_' : '';
 			$site_id = isset( $this->sites[$key] ) ? $this->sites[$key] : BLOG_ID_CURRENT_SITE;
 			$table = $table_prefix . $add_prefix;
+			$this->replace_class_file = WP_CONTENT_DIR . '/replace-class-' . $site_id . '.php';
 			break;
 		default :
 			$table = $table_prefix;
@@ -159,6 +162,10 @@ AND     `expire_time` = '{$row->expire_time}'
 						header( 'X-cache: updating' );
 					} else {
 						header( 'X-cache: cache' );
+					}
+					if ( file_exists( $this->replace_class_file ) ) {
+						require_once( $this->replace_class_file );
+						$row->content = KUSANAGI_Replace::replace( $row->content );
 					}
 					echo $row->content;
 					echo "\n" .'<!-- CacheID : ' . $row->hash . ' -->';   
