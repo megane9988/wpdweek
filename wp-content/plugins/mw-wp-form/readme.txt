@@ -3,8 +3,8 @@ Contributors: inc2734, ryu263, tomothumb, nanniku, mt8.biz, NExt-Season, kuck1u,
 Donate link: http://www.amazon.co.jp/registry/wishlist/39ANKRNSTNW40
 Tags: plugin, form, confirm, preview, shortcode, mail, chart, graph, html, contact form, form creation, form creator, form manager, form builder, custom form
 Requires at least: 4.0
-Tested up to: 4.4.0
-Stable tag: 2.7.0
+Tested up to: 4.4.2
+Stable tag: 2.8.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,6 +54,7 @@ Source: https://developers.google.com/chart/
 * [Kazuki Tomiyasu](http://visualive.jp/) ( [KUCKLU](https://profiles.wordpress.org/kuck1u/) )
 * [Kei Nomura](http://mypacecreator.net/) ( [mypacecreator](https://profiles.wordpress.org/mypacecreator/) )
 * [mh35](https://profiles.wordpress.org/mh35)
+* [Takashi Nojima](https://github.com/nojimage)
 
 == Installation ==
 
@@ -77,6 +78,26 @@ Do you have questions or issues with MW WP Form? Use these support channels appr
 5. Supports chart display of saved inquiry data.
 
 == Changelog ==
+
+= 2.8.2 =
+* Bugfix  : Fixed a json parser bug.
+
+= 2.8.1 =
+* Added   : Added MinImageSize validation.
+* Added   : Added MaxImageSize validation.
+* Bugfix  : Fixed a set_upload_file_keys bug and rename to regenerate_upload_file_keys.
+
+= 2.8.0 =
+* Added   : Support slug attribute. e.g. [mwform_formkey slug="form_slug"]
+* Added   : Added filter hook mwform_inquiry_data_columns-mwf_xxx
+* Added   : Added filter hook mwform_upload_file_keys_mw-wp-form-xxx
+* Added   : Added args of filter hook mwform_upload_dir_mw-wp-form-xxx and mwform_upload_filename_mw-wp-form-xxx
+* Added   : Added the Custom Mail Tag field. This field display value of mwform_custom_mail_tag_mw-wp-form-xxx.
+* Bugfix  : docx, xlsx, pptx upload bug fixed.
+* Bugfix  : Fixed a bug that the extension isn't added when using filter hook mwform_upload_filename_mw-wp-form-xxx.
+* Changed : Sending the file url when saving in database and input {file key} and {image key} in the mail.
+* Changed : Check of the js attribute of datepicker is now strictly. Property MUST be enclosed in double quotes.
+* Changed : Changed the form token name.
 
 = 2.7.0 =
 * Added   : Added Method MW_WP_Form_Mail_Parser::get_saved_mail_id()

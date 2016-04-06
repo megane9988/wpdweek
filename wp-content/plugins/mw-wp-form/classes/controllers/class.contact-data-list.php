@@ -1,11 +1,11 @@
 <?php
 /**
  * Name       : MW WP Form Contact Data List Controller
- * Version    : 1.1.1
+ * Version    : 1.2.0
  * Author     : Takashi Kitajima
  * Author URI : http://2inc.org
  * Created    : January 1, 2015
- * Modified   : May 26, 2015
+ * Modified   : March 26, 2016
  * License    : GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -125,7 +125,7 @@ class MW_WP_Form_Contact_Data_List_Controller extends MW_WP_Form_Controller {
 						continue;
 					}
 					if ( $key === MWF_Config::TRACKINGNUMBER ) {
-						$_columns[$key] = MWF_Functions::get_tracking_number_title( $this->post_type );
+						$columns[$key] = MWF_Functions::get_tracking_number_title( $this->post_type );
 						continue;
 					}
 					$_columns[$key] = $key;
@@ -133,7 +133,8 @@ class MW_WP_Form_Contact_Data_List_Controller extends MW_WP_Form_Controller {
 			}
 		}
 		ksort( $_columns );
-		$columns = array_merge( $columns, $_columns );
+		$_columns = apply_filters( 'mwform_inquiry_data_columns-' . $this->post_type, $_columns );
+		$columns  = array_merge( $columns, $_columns );
 		return $columns;
 	}
 

@@ -2,11 +2,11 @@
 /**
  * Name       : MW WP Form Data
  * Description: MW WP Form のデータ操作用
- * Version    : 1.4.0
+ * Version    : 1.5.1
  * Author     : Takashi Kitajima
  * Author URI : http://2inc.org
  * Created    : October 10, 2013
- * Modified   : January 4, 2016
+ * Modified   : April 4, 2016
  * License    : GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -60,7 +60,7 @@ class MW_WP_Form_Data {
 		$this->set_request_valiables( $this->POST );
 		$this->set_files_valiables( $this->POST, $this->FILES );
 	}
-	
+
 	/**
 	 * getInstance
 	 *
@@ -84,7 +84,7 @@ class MW_WP_Form_Data {
 		}
 		exit( 'MW_WP_Form_Data instantiation error.' );
 	}
-	
+
 	/**
 	 * Return form key
 	 *
@@ -158,7 +158,7 @@ class MW_WP_Form_Data {
 	 */
 	public function gets() {
 		if ( $this->data === null ) {
-			return array();
+			$this->data = array();
 		}
 		return $this->data;
 	}
@@ -225,7 +225,9 @@ class MW_WP_Form_Data {
 	 * @return string|null
 	 */
 	public function get( $key, array $children = array() ) {
-		if ( !isset( $this->data[$key] ) ) {
+		$post_value = $this->get_post_value_by_key( $key );
+
+		if ( is_null( $post_value ) ) {
 			return;
 		}
 
@@ -239,8 +241,8 @@ class MW_WP_Form_Data {
 			}
 		}
 
-		if ( is_array( $this->data[$key] ) ) {
-			if ( !array_key_exists( 'data', $this->data[$key] ) ) {
+		if ( is_array( $post_value ) ) {
+			if ( !array_key_exists( 'data', $post_value ) ) {
 				return;
 			}
 			if ( $children ) {
@@ -262,10 +264,12 @@ class MW_WP_Form_Data {
 	 * @return string|null
 	 */
 	public function get_raw( $key ) {
-		if ( !isset( $this->data[$key] ) ) {
+		$post_value = $this->get_post_value_by_key( $key );
+
+		if ( is_null( $post_value ) ) {
 			return;
 		}
-		if ( is_array( $this->data[$key] ) && !array_key_exists( 'data', $this->data[$key] ) ) {
+		if ( is_array( $post_value ) && !array_key_exists( 'data', $post_value ) ) {
 			return;
 		}
 
@@ -281,8 +285,8 @@ class MW_WP_Form_Data {
 				}
 			}
 		}
-		
-		if ( is_array( $this->data[$key] ) ) {
+
+		if ( is_array( $post_value ) ) {
 			if ( $children ) {
 				return $this->get_separated_raw_value( $key, $children );
 			}
@@ -297,6 +301,9 @@ class MW_WP_Form_Data {
 
 	/**
 	 * そのキーに紐づく送信データを取得（通常の value 以外に separator や data などが紐づく）
+	 *
+	 * @param string $key name 属性値
+	 * @return mixed
 	 */
 	public function get_post_value_by_key( $key ) {
 		if ( isset( $this->data[$key] ) ) {
@@ -465,11 +472,21 @@ class MW_WP_Form_Data {
 	/**
 	 * アップロードに失敗、もしくはファイルが削除されている key を UPLOAD_FILE_KEYS から削除
 	 */
-	public function set_upload_file_keys() {
+	public function regenerate_upload_file_keys() {
 		$upload_file_keys = $this->get_post_value_by_key( MWF_Config::UPLOAD_FILE_KEYS );
-		if ( !$upload_file_keys ) {
+		if ( !is_array( $upload_file_keys ) ) {
 			$upload_file_keys = array();
 		}
+
+		$upload_file_keys = apply_filters(
+			'mwform_upload_file_keys_' . $this->form_key,
+			$upload_file_keys,
+			clone $this
+		);
+		if ( !is_array( $upload_file_keys ) ) {
+			$upload_file_keys = array();
+		}
+		$upload_file_keys = array_values( array_unique( $upload_file_keys ) );
 
 		$wp_upload_dir = wp_upload_dir();
 		foreach ( $upload_file_keys as $key => $upload_file_key ) {
@@ -491,6 +508,9 @@ class MW_WP_Form_Data {
 	 */
 	public function push_uploaded_file_keys( array $uploaded_files = array() ) {
 		$upload_file_keys = $this->get_post_value_by_key( MWF_Config::UPLOAD_FILE_KEYS );
+		if ( !is_array( $upload_file_keys ) ) {
+			$upload_file_keys = array();
+		}
 		foreach ( $uploaded_files as $key => $upload_file ) {
 			$this->set( $key, $upload_file );
 			if ( is_array( $upload_file_keys ) && !in_array( $key, $upload_file_keys ) ) {

@@ -4,7 +4,7 @@
  Plugin URI: http://www.prime-strategy.co.jp/
  Description: WP SiteManager is an integrated package comprising of necessary functions for using WordPress as a CMS.
  Author: Prime Strategy Co.,LTD.
- Version: 1.1.11
+ Version: 1.2.2
  Author URI: http://www.prime-strategy.co.jp/
  License: GPLv2 or later
 */
@@ -80,12 +80,13 @@ class WP_SiteManager {
 	/*
 	 * 管理画面のメニューに基本メニューの追加を行います。
 	 * 基本メニューにはアクションフックのみが記述され、モジュールで設定項目を追加することが可能になっています。
-	 * モジュールのadd_submenu_pageがadd_object_pageより先にあるのは、サブメニューをメインメニュー名と異なるものにするためなので修正しないでください。
+	 * モジュールのadd_submenu_pageがadd_menu_pageより先にあるのは、サブメニューをメインメニュー名と異なるものにするためなので修正しないでください。
 	 * @since 0.0.1
 	 */
 	public function add_cms_menu() {
+		global $_wp_last_object_menu;
 		add_submenu_page( $this->root, 'モジュール', 'モジュール', 'administrator', __FILE__, array( $this, 'manage_module_page' ) );
-		add_object_page( 'WP SiteManager', 'WP SiteManager', 'administrator', __FILE__, array( $this, 'manage_module_page' ) );
+		add_menu_page( 'WP SiteManager', 'WP SiteManager', 'administrator', __FILE__, array( $this, 'manage_module_page' ), false, 30 );
 //		add_submenu_page( $this->root, '一般設定', '一般設定', 'administrator', basename( __FILE__ ) . '-general', array( $this, 'general_page' ) );
 		add_submenu_page( $this->root, 'SEO &amp; SMO', 'SEO &amp; SMO', 'administrator', basename( __FILE__ ) . '-access', array( $this, 'access_page' ) );
 	}

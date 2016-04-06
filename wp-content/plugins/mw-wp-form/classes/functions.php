@@ -2,11 +2,11 @@
 /**
  * Name       : MWF Functions
  * Description: 関数
- * Version    : 1.5.0
+ * Version    : 1.5.3
  * Author     : Takashi Kitajima
  * Author URI : http://2inc.org
  * Created    : May 29, 2013
- * Modified   : February 14, 2016
+ * Modified   : April 2, 2016
  * License    : GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -62,7 +62,7 @@ class MWF_Functions {
 			$fileurl = preg_replace( '/^https?:\/\/(.+)$/', '$1', $fileurl );
 			$filepath = str_replace(
 				$baseurl,
-				realpath( $wp_upload_dir['basedir'] ),
+				$wp_upload_dir['basedir'],
 				$fileurl
 			);
 			return $filepath;
@@ -78,7 +78,7 @@ class MWF_Functions {
 	public static function filepath_to_url( $filepath ) {
 		$wp_upload_dir = wp_upload_dir();
 		$fileurl = str_replace(
-			realpath( $wp_upload_dir['basedir'] ),
+			$wp_upload_dir['basedir'],
 			$wp_upload_dir['baseurl'],
 			$filepath
 		);
@@ -159,22 +159,31 @@ class MWF_Functions {
 	 * @return string 新しいファイルパス
 	 */
 	public static function move_temp_file_to_upload_dir( $filepath, $upload_dir = '', $filename = '' ) {
-		if ( !$upload_dir ) {
-			$wp_upload_dir = wp_upload_dir();
-			$upload_dir = realpath( $wp_upload_dir['path'] );
-		}
+		$wp_upload_dir = wp_upload_dir();
 
-		$temp_dir = dirname( $filepath );
-		if ( $temp_dir == $upload_dir ) {
-			return $filepath;
+		if ( !$upload_dir ) {
+			$upload_dir = $wp_upload_dir['path'];
+		} else {
+			$upload_dir = trailingslashit( $wp_upload_dir['basedir'] ) . ltrim( $upload_dir, '/\\' );
+			$bool = wp_mkdir_p( $upload_dir );
 		}
 
 		if ( !$filename ) {
 			$filename = basename( $filepath );
 		}
+
+		if ( !preg_match( '/(\..+?)$/', $filename ) ) {
+			$extension = pathinfo( $filepath, PATHINFO_EXTENSION );
+			$filename = $filename . '.' . $extension;
+		}
+		$filename = sanitize_file_name( $filename );
 		$filename = wp_unique_filename( $upload_dir, $filename );
 
 		$new_filepath = trailingslashit( $upload_dir ) . $filename;
+
+		if ( $filepath == $new_filepath ) {
+			return $filepath;
+		}
 
 		// もし temp ファイルが存在しない場合、一応リネーム後のパスだけ返す
 		if ( !file_exists( $filepath ) ) {
@@ -275,11 +284,28 @@ class MWF_Functions {
 				);
 				break;
 			case 'docx' :
+				$wp_check_filetype['type'] = array(
+					$wp_check_filetype['type'],
+					'application/zip',
+					'application/msword',
+				);
+				break;
 			case 'xlsx' :
+				$wp_check_filetype['type'] = array(
+					$wp_check_filetype['type'],
+					'application/zip',
+					'application/excel',
+					'application/msexcel',
+					'application/vnd.ms-excel',
+				);
+				break;
 			case 'pptx' :
 				$wp_check_filetype['type'] = array(
 					$wp_check_filetype['type'],
 					'application/zip',
+					'application/mspowerpoint',
+					'application/powerpoint',
+					'application/ppt',
 				);
 				break;
 		}

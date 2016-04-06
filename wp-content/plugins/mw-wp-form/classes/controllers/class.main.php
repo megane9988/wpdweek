@@ -2,11 +2,11 @@
 /**
  * Name       : MW WP Form Main Controller
  * Description: フロントエンドにおいて、適切な画面にリダイレクトさせる
- * Version    : 1.2.0
+ * Version    : 1.3.1
  * Author     : Takashi Kitajima
  * Author URI : http://2inc.org
  * Created    : December 23, 2014
- * Modified   : February 14, 2016
+ * Modified   : April 4, 2016
  * License    : GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -40,7 +40,7 @@ class MW_WP_Form_Main_Controller {
 	/**
 	 * @var string
 	 */
-	protected $token_name = 'token';
+	protected $token_name = 'mw_wp_form_token';
 
 	/**
 	 * リダイレクトされてからの complete であれば true
@@ -70,7 +70,10 @@ class MW_WP_Form_Main_Controller {
 	 * WordPressへのリクエストに含まれている、$_POSTの値を削除
 	 */
 	public function remove_query_vars_from_post( $wp_query ) {
-		if ( strtolower( $_SERVER['REQUEST_METHOD'] ) === 'post' && isset( $_POST['token'] ) ) {
+		if ( isset( $_POST[$this->token_name] ) ) {
+			$request_token = $_POST[$this->token_name];
+		}
+		if ( isset( $request_token ) ) {
 			foreach ( $_POST as $key => $value ) {
 				if ( $key == 'token' ) {
 					continue;
@@ -263,6 +266,13 @@ class MW_WP_Form_Main_Controller {
 
 		// 管理画面で作成した場合だけ自動で送信
 		if ( $this->ExecShortcode->is_generated_by_formkey() ) {
+			// データベース非保存の場合はファイルも保存されないので、メールで URL が飛ばないように消す
+			if ( !$this->Setting->get( 'usedb' ) ) {
+				foreach ( $attachments as $key => $attachment ) {
+					$this->Data->clear_value( $key );
+				}
+			}
+
 			$Mail_Service->send_admin_mail();
 
 			// 自動返信メールの送信
@@ -303,12 +313,14 @@ class MW_WP_Form_Main_Controller {
 					$new_upload_dir = apply_filters(
 						'mwform_upload_dir_' . $form_key,
 						'',
-						$this->Data
+						$this->Data,
+						$key
 					);
 					$new_filename = apply_filters(
 						'mwform_upload_filename_' . $form_key,
 						'',
-						$this->Data
+						$this->Data,
+						$key
 					);
 					$filepath = MWF_Functions::move_temp_file_to_upload_dir(
 						$filepath,
@@ -337,11 +349,13 @@ class MW_WP_Form_Main_Controller {
 		foreach ( $upload_files as $key => $file ) {
 			if ( $this->Validation->single_check( $key ) ) {
 				$files[$key] = $file;
+			} elseif ( isset( $files[$key] ) ) {
+				unset( $files[$key] );
 			}
 		}
 		$uploaded_files = $File->upload( $files );
-		$this->Data->set_upload_file_keys();
 		$this->Data->push_uploaded_file_keys( $uploaded_files );
+		$this->Data->regenerate_upload_file_keys();
 	}
 
 	/**

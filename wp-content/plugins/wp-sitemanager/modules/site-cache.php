@@ -653,10 +653,23 @@ WHERE	`hash` = '$hash'
 			$post_type = 'post';
 			$type = 'single';
 			$life_time_key = 'singular';
+		} elseif ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
+			$type = 'rest_api';
+			$post_type = 'rest_api';
+			$life_time_key = 'archive';
+		} else {
+			return $buffer;
 		}
 		
 		$expire = apply_filters( 'site_cache_expire_time', $life_time[$life_time_key] * 60, $life_time_key );
-		$cache = $buffer . "\n" . '<!-- page cached by WP SiteManager. ' . date( 'H:i:s' ) . '(GMT). Expire : ' . date( 'H:i:s', time() + $expire ) . '(GMT). -->';
+		if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
+			$cache = $buffer;
+			$cache = json_decode( $cache, true );
+			$cache['x-cached'] = '<!-- page cached by WP SiteManager. ' . date( 'H:i:s' ) . '(GMT). Expire : ' . date( 'H:i:s', time() + $expire ) . '(GMT). -->';
+			$cache = json_encode( $cache );
+		} else {
+			$cache = $buffer . "\n" . '<!-- page cached by WP SiteManager. ' . date( 'H:i:s' ) . '(GMT). Expire : ' . date( 'H:i:s', time() + $expire ) . '(GMT). -->';
+		}
 
 		$server = defined( 'CACHE_SERVER' ) ? CACHE_SERVER : '';
 		$data = array(
